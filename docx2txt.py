@@ -2,7 +2,7 @@
 
 # DOCX2TXT.PY
 #
-#   Iyad Obeid, 8/4/2014, v1.0.1
+#   Iyad Obeid, 11/18/2014, v1.0.2
 #
 #   Converts docx to text
 #   Run with -h or -help flag for more information on how to run
@@ -26,8 +26,8 @@ from docx import opendocx, getdocumenttext
 def main():
 
     # initialize flags
-    headerFlag = False
-    footerFlag = False
+    headerFlag = True
+    footerFlag = True
     bodyFlag   = True
     verboseFlag = False
     helpFlag = False
@@ -37,14 +37,14 @@ def main():
     # check all the input switches in order to set up process flow properly
     for i in range( 1 , len(sys.argv) ):
 
-        if (sys.argv[i].lower() == '-header') or \
-                (sys.argv[i].lower() == '-hdr') :
-            headerFlag = True
+        if (sys.argv[i].lower() == '-noheader') or \
+                (sys.argv[i].lower() == '-nohdr') :
+            headerFlag = False
             nArguments -= 1
 
-        elif (sys.argv[i].lower() == '-footer') or \
-                (sys.argv[i].lower() == '-ftr') :
-            footerFlag = True
+        elif (sys.argv[i].lower() == '-nofooter') or \
+                (sys.argv[i].lower() == '-noftr') :
+            footerFlag = False
             nArguments -= 1
 
         elif (sys.argv[i].lower() == '-verbose') or \
@@ -127,7 +127,7 @@ def main():
         print(' ')
         print('DOCX2TXT.py : coverts an MS Word docx file to text')
         print('    ./docx2txt.py inputfile.docx outputfile.txt')
-        print('    optional switches: -header (-hdr), -footer (-ftr)')
+        print('    optional switches: -noheader (-nohdr), -nofooter (-noftr)')
         print('                       -verbose (-v), -help')
         print(' ')
     
@@ -147,7 +147,7 @@ def getTheText(fileNameInput,newfile,fileType):
 
         # extract the text from the xml file
         paratextlist = getdocumenttext(document)
-        
+
         # if any text is found, make it unicode and write it to file
 
         if len(paratextlist) > 0 :
